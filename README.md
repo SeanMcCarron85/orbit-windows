@@ -6,6 +6,21 @@ Soft UX reference: Orbit cyber v3 (browser demo). This app is the native Windows
 
 Repo: https://github.com/SeanMcCarron85/orbit-windows
 
+## Download for home Windows (no npm build)
+
+**Recommended:** grab the prebuilt zip — unzip and run. No Node/npm required on the home PC.
+
+1. Download **[Orbit-1.0.0-win-x64.zip](https://github.com/SeanMcCarron85/orbit-windows/releases/download/v1.0.0-h1a1/Orbit-1.0.0-win-x64.zip)** from the [v1.0.0-h1a1 release](https://github.com/SeanMcCarron85/orbit-windows/releases/tag/v1.0.0-h1a1).
+2. Unzip the archive (e.g. right-click → Extract All).
+3. Open the extracted folder and double-click **`Orbit.exe`**.
+4. **SmartScreen** (unsigned personal build): if Windows shows *“Windows protected your PC”* → **More info** → **Run anyway**.
+5. First **Ask** / **What’s on screen?** may still prompt for screen-capture / desktop recording permission — allow once.
+6. Later Asks reuse Electron `desktopCapturer` on the primary monitor (no browser share picker).
+
+Release page (all assets): https://github.com/SeanMcCarron85/orbit-windows/releases/tag/v1.0.0-h1a1
+
+---
+
 ## Requirements
 
 - **Node.js 18+** (developed / verified with Node 20)
@@ -20,7 +35,9 @@ cd orbit-windows
 npm install
 ```
 
-## Run
+## Dev path (`npm start`)
+
+For local development from source (Node 18+):
 
 ```bash
 npm start
@@ -28,13 +45,17 @@ npm start
 
 That launches Electron and loads the companion UI.
 
-### Optional Windows package
+### Rebuild the Windows zip (maintainers / CI)
+
+On Linux (this repo’s preferred path; **no Wine**):
 
 ```bash
 npm run dist
 ```
 
-Produces installer / portable artifacts under `dist/` via electron-builder (run on Windows for best results).
+Produces `dist/Orbit-1.0.0-win-x64.zip` via electron-builder **`zip`** target (`signAndEditExecutable: false`). NSIS/portable targets need Wine on Linux and are not used for the home download.
+
+Attach the zip to a GitHub Release — do not commit binaries into git.
 
 ## First screen permission (Windows)
 

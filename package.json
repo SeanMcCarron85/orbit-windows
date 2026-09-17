@@ -9,7 +9,7 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --win"
+    "dist": "electron-builder --win --x64"
   },
   "engines": {
     "node": ">=18"
@@ -35,10 +35,10 @@
     ],
     "win": {
       "target": [
-        "nsis",
-        "portable"
+        "zip"
       ],
-      "artifactName": "Orbit-${version}-${os}-${arch}.${ext}"
+      "artifactName": "Orbit-${version}-${os}-${arch}.${ext}",
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,

@@ -70,7 +70,7 @@ Confirm forever. **No HID.**
 - Vision quality depends on your BYO model/key
 - No Pi / M5Stack / Orange Pi path
 - Simplified orb presence (not full cyber-v3 3D cube / personas / Look around)
-- `npm run dist` packaging not smoke-tested on this Linux build agent (source `npm start` is the primary path)
+- NSIS/portable Windows targets skipped on Linux (need Wine); home path is the **zip** Release asset
 
 ## Permission grant (Windows)
 
@@ -97,6 +97,10 @@ Optional: Save a vision key → Ask → badge **from vision** when the model ret
 
 ## How to run on Windows
 
+**Home (no npm):** download **Orbit-1.0.0-win-x64.zip** from [v1.0.0-h1a1](https://github.com/SeanMcCarron85/orbit-windows/releases/tag/v1.0.0-h1a1) → unzip → run **Orbit.exe** (SmartScreen → More info → Run anyway if prompted). See README **Download for home Windows**.
+
+**Dev from source:**
+
 ```bash
 git clone https://github.com/SeanMcCarron85/orbit-windows.git
 cd orbit-windows
@@ -104,19 +108,33 @@ npm install
 npm start
 ```
 
-Node **18+** (20 recommended). See README for BYO vision and optional `npm run dist`.
+Node **18+** (20 recommended). Maintainers: `npm run dist` on Linux produces the zip (Wine not required).
+
+## Distributable
+
+| Item | Detail |
+| --- | --- |
+| Release | https://github.com/SeanMcCarron85/orbit-windows/releases/tag/v1.0.0-h1a1 |
+| Asset | `Orbit-1.0.0-win-x64.zip` (~107 MB) |
+| Direct download | https://github.com/SeanMcCarron85/orbit-windows/releases/download/v1.0.0-h1a1/Orbit-1.0.0-win-x64.zip |
+| Binary inside zip | `Orbit.exe` (productName **Orbit**) |
+| Build config | `build.win.target: ["zip"]`, `signAndEditExecutable: false` (cross-compile from Linux, no Wine) |
+
+NSIS / portable targets were **not** produced (Wine missing on the Linux agent). Zip is the home download path.
 
 ## Verified on this Linux box vs Sean on Windows
 
 | Check | Linux box (build agent) | Sean on Windows |
 | --- | --- | --- |
-| `npm install` | yes | expected |
-| App loads / idle STATUS | yes (headless/xvfb if needed) | yes |
-| State machine Confirm gate | yes (logic) | yes |
+| `npm install` | yes | expected (dev only) |
+| App loads / idle STATUS | yes (headless/xvfb if needed) | **verify** via unzip → Orbit.exe |
+| State machine Confirm gate | yes (logic) | **verify** |
 | Real primary-monitor JPEG | may be empty / compositor-limited | **must verify** |
 | OS screen permission UX | n/a | **must verify** |
+| SmartScreen / unsigned run | n/a | **must verify** (More info → Run anyway) |
 | BYO vision live call | only if key provided locally (not committed) | optional |
-| electron-builder `.exe` | not produced here | optional `npm run dist` |
+| `electron-builder` zip | **yes** — `Orbit-1.0.0-win-x64.zip` built; contains `Orbit.exe` + `resources/app.asar` | download→run (no local npm) |
+| NSIS / portable | skipped (Wine required) | n/a |
 
 ## Blockers
-- None for source ship. Real capture quality and Windows permission prompts need Sean’s Windows machine.
+- None for zip ship. Real capture quality, SmartScreen, and Windows permission prompts need Sean’s home Windows machine.
