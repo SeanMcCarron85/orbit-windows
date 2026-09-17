@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data: blob:; connect-src 'none';" />
+  <title>Orbit — Windows</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="lab">
+    <div class="scanline" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <h1>ORBIT <span>windows · H1-a1</span></h1>
+          <p class="tag">desk companion · presence on · Ask to wake</p>
+        </div>
+      </div>
+      <div class="hud">
+        <div class="hud-label">STATE</div>
+        <div class="state-pill" id="stateLabel">idle</div>
+        <div class="status-line" id="statusLine">presence on · Ask to wake</div>
+        <div class="capture-status" id="captureStatus">Capture: idle</div>
+        <div class="meta-line" id="metaLine"></div>
+      </div>
+    </header>
+
+    <main class="stage">
+      <div class="presence" id="presence" data-state="idle" aria-label="Orbit presence">
+        <div class="orb-ring"></div>
+        <div class="orb-core"></div>
+        <div class="orb-glow"></div>
+        <div class="orb-label" id="orbLabel">idle</div>
+      </div>
+
+      <aside class="vision-panel" aria-label="BYO vision settings">
+        <div class="panel-head">
+          <span class="panel-title">VISION · BYO</span>
+          <span class="panel-sub" id="visionHint">No key · soft heuristic</span>
+        </div>
+        <div class="vision-grid">
+          <label class="vf">
+            <span>Provider</span>
+            <select id="visionProvider">
+              <option value="openai-compatible" selected>OpenAI-compatible</option>
+            </select>
+          </label>
+          <label class="vf grow">
+            <span>Base URL</span>
+            <input type="url" id="visionBaseUrl" spellcheck="false" autocomplete="off"
+              value="https://api.openai.com/v1/chat/completions" />
+          </label>
+          <label class="vf">
+            <span>Model</span>
+            <input type="text" id="visionModel" spellcheck="false" autocomplete="off" value="gpt-4o-mini" />
+          </label>
+          <label class="vf grow">
+            <span>API key</span>
+            <input type="password" id="visionApiKey" spellcheck="false" autocomplete="off"
+              placeholder="OpenAI API key (stored locally)" />
+          </label>
+          <div class="vision-actions">
+            <button type="button" id="visionSaveBtn" class="btn soft">Save</button>
+            <button type="button" id="visionClearBtn" class="btn ghost">Clear</button>
+          </div>
+        </div>
+        <p class="vision-note">Key in electron-store (userData) only · main → your endpoint · never committed</p>
+      </aside>
+
+      <aside class="plan-panel" id="planPanel" hidden aria-label="Text-only action plan">
+        <div class="plan-head">
+          <span class="plan-title">PLAN · TEXT ONLY</span>
+          <span class="plan-badge" id="planBadge"></span>
+        </div>
+        <ol class="plan-steps" id="planSteps"></ol>
+        <p class="plan-foot" id="planFoot"></p>
+      </aside>
+    </main>
+
+    <section class="rail">
+      <div class="capture-row" id="captureRow" hidden>
+        <img class="capture-thumb" id="captureThumb" alt="Captured frame" width="96" height="54" />
+        <div class="capture-meta">
+          <div class="capture-badge" id="captureBadge">FRAME</div>
+          <div class="capture-note" id="captureNote"></div>
+        </div>
+      </div>
+
+      <div class="caption" id="caption" data-who="">
+        <span class="who" id="captionWho"></span>
+        <span class="line" id="captionLine"></span>
+      </div>
+
+      <div class="ask-row">
+        <label class="ask-label" for="askInput">TASK</label>
+        <input type="text" id="askInput" class="ask-input" placeholder="Ask Orbit…" autocomplete="off" spellcheck="true" />
+        <button type="button" id="askBtn" class="btn ask">Ask</button>
+        <button type="button" id="whatsOnScreenBtn" class="btn whats">What’s on screen?</button>
+      </div>
+      <p class="steer">Full-monitor capture via Electron <code>desktopCapturer</code> (primary display). No share picker each Ask after OS permission.</p>
+
+      <div class="actions">
+        <button type="button" id="confirmBtn" class="btn confirm" hidden>Confirm</button>
+      </div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
